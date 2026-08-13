@@ -1,0 +1,55 @@
+<p data-path-to-node="2"><strong>Generated with Google Gemini.</strong><br><br>Aqui estão exemplos de consultas SPARQL para <strong data-path-to-node="2" data-index-in-node="45">jogos sérios</strong> (aplicados à reabilitação motora e análise de desempenho em tarefas motoras com bola), utilizando a ontologia e o grafo RDF gerados a partir dos seus dados.</p>
+<h3 data-path-to-node="4">Prefixo Padrão para as Consultas</h3><response-element ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c1274178722=""><div _ngcontent-ng-c1274178722="" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_f580662bccb06795&quot;,&quot;c_13d3fdcc7b335d6e&quot;,null,&quot;rc_3bc6f604f506b085&quot;,null,null,&quot;en&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjA95qOiZuWAxUAAAAAHQAAAAAQxAI" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><span _ngcontent-ng-c1274178722="">Code snippet</span><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"></div></div>
+<pre _ngcontent-ng-c1274178722=""><code _ngcontent-ng-c1274178722="" role="text" data-test-id="code-content">PREFIX rdf: &lt;http://www.w3.org/1999/02/22-rdf-syntax-ns#&gt;
+PREFIX rdfs: &lt;http://www.w3.org/2000/01/rdf-schema#&gt;
+PREFIX xsd: &lt;http://www.w3.org/2001/XMLSchema#&gt;
+PREFIX schema: &lt;https://schema.org/&gt;
+PREFIX ex: &lt;http://example.org/ontology#&gt;
+</code></pre></div></div></div></code-block></response-element><h3 data-path-to-node="7">1. Desempenho do Participante por Grupo Clínico</h3>
+<ul data-path-to-node="8"><li><p data-path-to-node="8,0,0"><strong data-path-to-node="8,0,0" data-index-in-node="0">Caso de Uso no Jogo Sério:</strong> Avaliar e comparar a taxa média de acerto (<code data-path-to-node="8,0,0" data-index-in-node="70">hitRate</code>) de jogadores do grupo com Paralisia Cerebral (<code data-path-to-node="8,0,0" data-index-in-node="125">CP</code>) versus o grupo controle (<code data-path-to-node="8,0,0" data-index-in-node="154">Control</code>).</p></li></ul><response-element ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c1274178722=""><div _ngcontent-ng-c1274178722="" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_f580662bccb06795&quot;,&quot;c_13d3fdcc7b335d6e&quot;,null,&quot;rc_3bc6f604f506b085&quot;,null,null,&quot;en&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjA95qOiZuWAxUAAAAAHQAAAAAQxQI" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><span _ngcontent-ng-c1274178722="">Code snippet</span><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"></div></div>
+<pre _ngcontent-ng-c1274178722=""><code _ngcontent-ng-c1274178722="" role="text" data-test-id="code-content">SELECT ?group (COUNT(DISTINCT ?participant) AS ?totalParticipants) (AVG(?hitRate) AS ?avgHitRate)
+WHERE {
+  ?participant a ex:Participant ;
+               ex:studyGroup ?group ;
+               ex:hasMatch ?match .
+  
+  ?match a ex:Match ;
+         ex:hitRate ?hitRate .
+}
+GROUP BY ?group
+ORDER BY DESC(?avgHitRate)
+</code></pre></div></div></div></code-block></response-element><h3 data-path-to-node="11">2. Análise de Precisão de Arremessos em Partidas Específicas</h3>
+<ul data-path-to-node="12"><li><p data-path-to-node="12,0,0"><strong data-path-to-node="12,0,0" data-index-in-node="0">Caso de Uso no Jogo Sério:</strong> Contar quantos arremessos foram acertos (<code data-path-to-node="12,0,0" data-index-in-node="68">isHit = true</code>) versus erros (<code data-path-to-node="12,0,0" data-index-in-node="96">isHit = false</code>) dentro de partidas jogadas por um determinado participante.</p></li></ul><response-element ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c1274178722=""><div _ngcontent-ng-c1274178722="" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_f580662bccb06795&quot;,&quot;c_13d3fdcc7b335d6e&quot;,null,&quot;rc_3bc6f604f506b085&quot;,null,null,&quot;en&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjA95qOiZuWAxUAAAAAHQAAAAAQxgI" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><span _ngcontent-ng-c1274178722="">Code snippet</span><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"></div></div>
+<pre _ngcontent-ng-c1274178722=""><code _ngcontent-ng-c1274178722="" role="text" data-test-id="code-content">SELECT ?match ?isHit (COUNT(?shot) AS ?totalShots)
+WHERE {
+  ?participant a ex:Participant ;
+               schema:identifier 32 ;
+               ex:hasMatch ?match .
+  
+  ?match ex:hasShot ?shot .
+  ?shot a ex:ShotAttempt ;
+        ex:isHit ?isHit .
+}
+GROUP BY ?match ?isHit
+ORDER BY ?match
+</code></pre></div></div></div></code-block></response-element><h3 data-path-to-node="15">3. Adaptação Dinâmica de Dificuldade (DDA - Dynamic Difficulty Adjustment)</h3>
+<ul data-path-to-node="16"><li><p data-path-to-node="16,0,0"><strong data-path-to-node="16,0,0" data-index-in-node="0">Caso de Uso no Jogo Sério:</strong> Identificar jogadores que estão apresentando baixa taxa de acerto (<code data-path-to-node="16,0,0" data-index-in-node="94">hitRate &lt; 0.30</code>) nas partidas para ajustar o nível de dificuldade do jogo em tempo real.</p></li></ul><response-element ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c1274178722=""><div _ngcontent-ng-c1274178722="" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_f580662bccb06795&quot;,&quot;c_13d3fdcc7b335d6e&quot;,null,&quot;rc_3bc6f604f506b085&quot;,null,null,&quot;en&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjA95qOiZuWAxUAAAAAHQAAAAAQxwI" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><span _ngcontent-ng-c1274178722="">Code snippet</span><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"></div></div>
+<pre _ngcontent-ng-c1274178722=""><code _ngcontent-ng-c1274178722="" role="text" data-test-id="code-content">SELECT ?participant ?participantID ?match ?hitRate
+WHERE {
+  ?participant a ex:Participant ;
+               schema:identifier ?participantID ;
+               ex:hasMatch ?match .
+  
+  ?match ex:hitRate ?hitRate .
+  
+  FILTER(?hitRate &lt; 0.30)
+}
+ORDER BY ?hitRate
+</code></pre></div></div></div></code-block></response-element><h3 data-path-to-node="19">4. Extração da Ontologia (Metadados de Classes e Propriedades)</h3>
+<ul data-path-to-node="20"><li><p data-path-to-node="20,0,0"><strong data-path-to-node="20,0,0" data-index-in-node="0">Caso de Uso no Jogo Sério:</strong> Consultar a estrutura do modelo conceitual diretamente do endpoint SPARQL para motor de regras semânticas do jogo.</p></li></ul><response-element ng-version="0.0.0-PLACEHOLDER"><code-block _nghost-ng-c1274178722=""><div _ngcontent-ng-c1274178722="" jslog="223238;track:impression,attention;BardVeMetadataKey:[[&quot;r_f580662bccb06795&quot;,&quot;c_13d3fdcc7b335d6e&quot;,null,&quot;rc_3bc6f604f506b085&quot;,null,null,&quot;en&quot;,null,1,null,null,1,0]]" data-hveid="0" decode-data-ved="1" data-ved="0CAAQhtANahgKEwjA95qOiZuWAxUAAAAAHQAAAAAQyAI" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"><span _ngcontent-ng-c1274178722="">Code snippet</span><div _ngcontent-ng-c1274178722="" bis_skin_checked="1"></div></div>
+<pre _ngcontent-ng-c1274178722=""><code _ngcontent-ng-c1274178722="" role="text" data-test-id="code-content">SELECT ?class ?label ?parentClass
+WHERE {
+  ?class a owl:Class ;
+         rdfs:label ?label .
+  OPTIONAL { ?class rdfs:subClassOf ?parentClass . }
+}</code></pre></div></div></div></code-block></response-element>
