@@ -40,11 +40,12 @@ Ensure you have Python 3.9 or higher installed.
 ### Installation
 
 1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/your-username/ciatec-ontogame.git](https://github.com/your-username/ciatec-ontogame.git)
-   cd ciatec-ontogame
+```bash
+git clone [https://github.com/your-username/ciatec-ontogame.git](https://github.com/your-username/ciatec-ontogame.git)
+cd ciatec-ontogame
 
 ```
+
 
 2. **Create a virtual environment (optional but recommended):**
 ```bash
