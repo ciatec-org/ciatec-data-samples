@@ -66,7 +66,7 @@ pip install streamlit rdflib networkx pyvis
 Launch the Streamlit app with the following command:
 
 ```bash
-streamlit run app.py
+streamlit run poc3_grafo.py
 
 ```
 
@@ -77,7 +77,7 @@ Open your browser and navigate to `http://localhost:8501`.
 ## 📁 Project Structure
 
 ```text
-├── app.py              # Main Streamlit application
+├── poc3_grafo.py              # Main Streamlit application
 ├── README.md           # Project documentation
 └── ciatec_fair_ontology.ttl  # Exported RDF/Turtle ontology sample
 
