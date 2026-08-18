@@ -1,4 +1,3 @@
-```markdown
 # 🧩 CIATec: OntoGame & LLM Architect
 
 An interactive Streamlit application designed for building FAIR-aligned (Findable, Accessible, Interoperable, Reusable) ontologies and integrating them with Large Language Models (LLMs) via Graph-RAG. This project supports Virtual Rehabilitation and Inclusive Technologies under the CIATec / HINT 2026 framework.
@@ -60,10 +59,6 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install streamlit rdflib networkx pyvis
 
 ```
-
-
-
----
 
 ## 🏃 Running the Application
 
