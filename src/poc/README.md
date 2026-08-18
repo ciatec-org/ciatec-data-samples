@@ -61,6 +61,13 @@ pip install streamlit rdflib networkx pyvis
 
 ```
 
+or 
+
+```bash
+pip install -r requirements.txt
+
+```
+
 ## 🏃 Running the Application
 
 Launch the Streamlit app with the following command:
