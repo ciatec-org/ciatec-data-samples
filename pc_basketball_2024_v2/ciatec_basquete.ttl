@@ -1,0 +1,273 @@
+@prefix ciatec: <http://www.ciatec.org/ontology/basketball#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix prov:  <http://www.w3.org/ns/prov#> .
+
+# ─────────────────────────────────────────
+#  ONTOLOGIA
+# ─────────────────────────────────────────
+ciatec: a owl:Ontology ;
+    rdfs:label "CIATec PC Basketball Ontology" ;
+    rdfs:comment "Ontologia do jogo sério de basquete — PC Basketball 2024." .
+
+# ─────────────────────────────────────────
+#  CLASSES
+# ─────────────────────────────────────────
+
+ciatec:Participant a owl:Class ;
+    rdfs:subClassOf foaf:Person ;
+    rdfs:label "Participant" ;
+    rdfs:comment "Jogador que realiza as tarefas no jogo." .
+
+ciatec:HealthCondition a owl:Class ;
+    rdfs:label "HealthCondition" ;
+    rdfs:comment "Condição de saúde do participante." .
+
+ciatec:CerebralPalsy a owl:Class ;
+    rdfs:subClassOf ciatec:HealthCondition ;
+    rdfs:label "CerebralPalsy" ;
+    rdfs:comment "Participante com paralisia cerebral." .
+
+ciatec:GMFCSLevel a owl:Class ;
+    rdfs:label "GMFCSLevel" ;
+    rdfs:comment "Nível da Gross Motor Function Classification System (I–V)." .
+
+ciatec:MACSLevel a owl:Class ;
+    rdfs:label "MACSLevel" ;
+    rdfs:comment "Nível da Manual Ability Classification System (I–V)." .
+
+ciatec:GameSession a owl:Class ;
+    rdfs:label "GameSession" ;
+    rdfs:comment "Sessão de participação no jogo (dia de intervenção)." .
+
+ciatec:Match a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:label "Match" ;
+    rdfs:comment "Partida individual dentro de uma sessão." .
+
+ciatec:ShotAttempt a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:label "ShotAttempt" ;
+    rdfs:comment "Tentativa individual de arremesso." .
+
+ciatec:GameOutcome a owl:Class ;
+    rdfs:label "GameOutcome" ;
+    rdfs:comment "Resultado de uma tentativa de arremesso." .
+
+ciatec:ShotPosition a owl:Class ;
+    rdfs:label "ShotPosition" ;
+    rdfs:comment "Posição do arremesso na quadra: esquerda, centro ou direita." .
+
+# ─────────────────────────────────────────
+#  OBJECT PROPERTIES
+# ─────────────────────────────────────────
+
+ciatec:hasHealthCondition a owl:ObjectProperty ;
+    rdfs:domain ciatec:Participant ;
+    rdfs:range  ciatec:HealthCondition ;
+    rdfs:label  "hasHealthCondition" .
+
+ciatec:belongsToGroup a owl:ObjectProperty ;
+    rdfs:domain ciatec:Participant ;
+    rdfs:range ciatec:ParticipantGroup ;
+    rdfs:label "belongsToGroup" .
+
+ciatec:hasGMFCS a owl:ObjectProperty ;
+    rdfs:domain ciatec:CerebralPalsy ;
+    rdfs:range  ciatec:GMFCSLevel ;
+    rdfs:label  "hasGMFCS" .
+
+ciatec:hasMACS a owl:ObjectProperty ;
+    rdfs:domain ciatec:CerebralPalsy ;
+    rdfs:range  ciatec:MACSLevel ;
+    rdfs:label  "hasMACS" .
+
+ciatec:participatesIn a owl:ObjectProperty ;
+    rdfs:domain ciatec:Participant ;
+    rdfs:range  ciatec:GameSession ;
+    rdfs:label  "participatesIn" .
+
+ciatec:containsMatch a owl:ObjectProperty ;
+    rdfs:domain ciatec:GameSession ;
+    rdfs:range ciatec:Match ;
+    rdfs:label "containsMatch" ;
+    rdfs:comment "Relaciona uma sessão às partidas que a compõem." .
+
+ciatec:containsShot a owl:ObjectProperty ;
+    rdfs:domain ciatec:Match ;
+    rdfs:range ciatec:ShotAttempt ;
+    rdfs:label "containsShot" ;
+    rdfs:comment "Relaciona uma partida às tentativas de arremesso que a compõem." .
+
+ciatec:hasOutcome a owl:ObjectProperty ;
+    rdfs:domain ciatec:ShotAttempt ;
+    rdfs:range  ciatec:GameOutcome ;
+    rdfs:label  "hasOutcome" .
+
+ciatec:hasCurrentPosition a owl:ObjectProperty ;
+    rdfs:domain ciatec:ShotAttempt ;
+    rdfs:range  ciatec:ShotPosition ;
+    rdfs:label  "hasCurrentPosition" ;
+    rdfs:comment "Posição do arremesso: Left, Centre ou Right." .
+
+# ─────────────────────────────────────────
+#  DATATYPE PROPERTIES
+# ─────────────────────────────────────────
+
+# Participant
+ciatec:hasAge a owl:DatatypeProperty ;
+    rdfs:domain ciatec:Participant ;
+    rdfs:range  xsd:integer ;
+    rdfs:label  "hasAge" ;
+    rdfs:comment "Idade em anos no momento da avaliação." .
+
+ciatec:hasSex a owl:DatatypeProperty ;
+    rdfs:domain ciatec:Participant ;
+    rdfs:range [
+        a rdfs:Datatype ;
+        owl:onDatatype xsd:string ;
+        owl:withRestrictions (
+            [ xsd:pattern "male|female" ]
+        )
+    ] ;
+    rdfs:label  "hasSex" ;
+    rdfs:comment "Sexo biológico: 'male' ou 'female'." .
+
+# GameSession
+ciatec:hasDay a owl:DatatypeProperty ;
+    rdfs:domain ciatec:GameSession ;
+    rdfs:range  xsd:integer ;
+    rdfs:label  "hasDay" ;
+    rdfs:comment "Dia do protocolo (1–10)." .
+
+# Match
+
+ciatec:hasSpeed a owl:DatatypeProperty ;
+    rdfs:domain ciatec:Match ;
+    rdfs:range  xsd:integer ;
+    rdfs:label  "hasSpeed" ;
+    rdfs:comment "Velocidade do jogo (1–4, ordinal)." .
+
+ciatec:hasHitRate a owl:DatatypeProperty ;
+    rdfs:domain ciatec:Match ;
+    rdfs:range  xsd:float ;
+    rdfs:label  "hasHitRate" ;
+    rdfs:comment "Proporção de acertos: n_hits / n_shots." .
+
+ciatec:hasNShots a owl:DatatypeProperty ;
+    rdfs:domain ciatec:Match ;
+    rdfs:range  xsd:integer ;
+    rdfs:label  "hasNShots" ;
+    rdfs:comment "Número total de tentativas na partida." .
+
+ciatec:hasTotalTime a owl:DatatypeProperty ;
+    rdfs:domain ciatec:Match ;
+    rdfs:range  xsd:float ;
+    rdfs:label  "hasTotalTime" ;
+    rdfs:comment "Duração total da partida em segundos (tipicamente 45s)." .
+
+# ShotAttempt
+ciatec:isSamePosition a owl:DatatypeProperty ;
+    rdfs:domain ciatec:ShotAttempt ;
+    rdfs:range  xsd:boolean ;
+    rdfs:label  "isSamePosition" ;
+    rdfs:comment "Indica se a posição é igual à do arremesso anterior." .
+
+ciatec:hasTimeBetween a owl:DatatypeProperty ;
+    rdfs:domain ciatec:ShotAttempt ;
+    rdfs:range  xsd:float ;
+    rdfs:label  "hasTimeBetween" ;
+    rdfs:comment "Tempo de retenção/preparação entre eventos (segundos)." .
+
+ciatec:hasTimeRemaining a owl:DatatypeProperty ;
+    rdfs:domain ciatec:ShotAttempt ;
+    rdfs:range  xsd:float ;
+    rdfs:label  "hasTimeRemaining" ;
+    rdfs:comment "Tempo restante na partida no momento do arremesso (segundos)." .
+
+# GameOutcome
+ciatec:isHit a owl:DatatypeProperty ;
+    rdfs:domain ciatec:GameOutcome ;
+    rdfs:range  xsd:boolean ;
+    rdfs:label  "isHit" ;
+    rdfs:comment "Resultado do arremesso: true=acerto, false=erro." .
+
+# ─────────────────────────────────────────
+#  INSTÂNCIAS DE EXEMPLO
+# ─────────────────────────────────────────
+
+ciatec:Participant_002 a ciatec:Participant ;
+    ciatec:hasAge 10 ;
+    ciatec:hasSex "male" ;
+    ciatec:hasHealthCondition ciatec:CP_002 .
+
+ciatec:CP_002 a ciatec:CerebralPalsy ;
+    ciatec:hasGMFCS ciatec:GMFCS_I ;
+    ciatec:hasMACS  ciatec:MACS_I .
+
+ciatec:GMFCS_I a ciatec:GMFCSLevel ;
+    rdfs:label "GMFCS Level I" .
+
+ciatec:MACS_I a ciatec:MACSLevel ;
+    rdfs:label "MACS Level I" .
+
+ciatec:Session_002_D1 a ciatec:GameSession ;
+    ciatec:hasDay 1 .
+
+ciatec:Participant_002 ciatec:participatesIn ciatec:Session_002_D1 .
+
+ciatec:Match_060 a ciatec:Match ;
+    ciatec:hasSpeed     1 ;
+    ciatec:hasHitRate   0.55 ;
+    ciatec:hasNShots    11 ;
+    ciatec:hasTotalTime 45.0 .
+
+ciatec:Session_002_D1 ciatec:containsMatch ciatec:Match_060 .
+
+ciatec:Shot_18848 a ciatec:ShotAttempt ;
+    ciatec:hasCurrentPosition ciatec:Centre ;
+    ciatec:isSamePosition     true ;
+    ciatec:hasTimeBetween     0.27 ;
+    ciatec:hasTimeRemaining   44.73 ;
+    ciatec:hasOutcome         ciatec:Outcome_18848 .
+
+ciatec:Match_060 ciatec:containsShot ciatec:Shot_18848 .
+
+ciatec:Outcome_18848 a ciatec:GameOutcome ;
+    ciatec:isHit true .
+
+# Instâncias de ShotPosition
+ciatec:Left a ciatec:ShotPosition ;
+    rdfs:label "Left" ;
+    rdfs:comment "Posição esquerda (código 1 nos dados)." .
+
+ciatec:Centre a ciatec:ShotPosition ;
+    rdfs:label "Centre" ;
+    rdfs:comment "Posição centro (código 2 nos dados)." .
+
+ciatec:Right a ciatec:ShotPosition ;
+    rdfs:label "Right" ;
+    rdfs:comment "Posição direita (código 3 nos dados)." .
+
+ciatec:hasParticipant a owl:ObjectProperty ;
+    rdfs:domain ciatec:Match ;
+    rdfs:range ciatec:Participant .
+
+ciatec:hasPreviousPosition a owl:ObjectProperty ;
+    rdfs:domain ciatec:ShotAttempt ;
+    rdfs:range ciatec:ShotPosition .
+
+ciatec:ParticipantGroup a owl:Class ;
+    rdfs:label "ParticipantGroup" ;
+    rdfs:comment "Grupo de participantes definido pelo protocolo do estudo." .
+
+ciatec:CerebralPalsyGroup a owl:Class ;
+    rdfs:subClassOf ciatec:ParticipantGroup ;
+    rdfs:label "CerebralPalsyGroup" .
+
+ciatec:ControlGroup a owl:Class ;
+    rdfs:subClassOf ciatec:ParticipantGroup ;
+    rdfs:label "ControlGroup" .
